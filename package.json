@@ -1,0 +1,68 @@
+{
+  "name": "dsh-math-lab",
+  "version": "0.1.0",
+  "description": "高中数学动态实验室：24 个可调参数的交互动图模型（函数 / 三角 / 向量 / 圆锥曲线 / 导数 / 概率统计），配知识点讲解、分步解说、出题判分与 3D 立体几何视角。 · Interactive high-school math lab for DeepSeek Harness.",
+  "type": "module",
+  "license": "MIT",
+  "author": "nopanicer",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "math",
+    "education",
+    "simulation",
+    "animation",
+    "canvas",
+    "math-lab",
+    "high-school"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "docs/models-sheet.png",
+    "docs/CONTRACT.md",
+    "docs/BRIEF.md"
+  ],
+  "engines": {
+    "dsh": ">=0.2.0-0 || >=0.2.1-rc.1"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "*"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node build.mjs && node tools/check.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nopanicer/dsh-math-lab.git"
+  },
+  "homepage": "https://github.com/nopanicer/dsh-math-lab#readme",
+  "bugs": {
+    "url": "https://github.com/nopanicer/dsh-math-lab/issues"
+  }
+}

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 零依赖：构建 + 语法 + 契约检查都由仓库内的 node 脚本完成
+      - name: Build client bundle
+        run: node build.mjs
+
+      - name: Bundle stays in sync with src/
+        run: |
+          if ! git diff --quiet -- client.js; then
+            echo "::error::client.js 与 src/ 不同步，请本地运行 node build.mjs 后一起提交"
+            git diff --stat -- client.js
+            exit 1
+          fi
+
+      - name: Syntax check
+        run: node --check client.js
+
+      - name: Duplicate top-level declarations
+        run: node tools/lint-names.mjs
+
+      - name: Model / lesson / quiz contract
+        run: node tools/check.mjs
